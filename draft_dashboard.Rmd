@@ -15,7 +15,9 @@ library(flexdashboard) # always
 Preparing the dashboard based on the instructions given at @magallanes_reyes_data_2022, and @sievert_flexdashboard_2022.
 
 ### References
-<div id="refs"></div>
+
+::: {#refs}
+:::
 
 ## Column {data-width="450"}
 
@@ -27,7 +29,7 @@ link1="https://github.com/98oakOrg/690V_w1/raw/main/del1Draft.rds"
 readRDS(url(link1))
 ```
 
-### Worst histogram 
+### Worst histogram
 
 ```{r}
 ## for del2Draft.rds
@@ -44,5 +46,3 @@ readRDS(url(link2))
 link3="https://github.com/98oakOrg/690V_w1/raw/main/del3Draft.rds"
 readRDS(url(link3))
 ```
-
-
