@@ -22,17 +22,17 @@ Preparing the dashboard based on the instructions given at @magallanes_reyes_dat
 ### Worst barplot <!-- a title for plot -->
 
 ```{r}
-## for del1Draft.rds
-#link1=""
-readRDS()
+##for del1Draft.rds
+link1="https://github.com/98oakOrg/690V_w1/raw/main/del1Draft.rds"
+readRDS(url(link1))
 ```
 
 ### Worst histogram 
 
 ```{r}
 ## for del2Draft.rds
-#link2=""
-readRDS()
+link2="https://github.com/98oakOrg/690V_w1/raw/main/del2Draft.rds"
+readRDS(url(link2))
 ```
 
 ## Column {data-width="550"}
@@ -41,8 +41,8 @@ readRDS()
 
 ```{r}
 ## for del3Draft.rds
-#link3=""
-readRDS()
+link3="https://github.com/98oakOrg/690V_w1/raw/main/del3Draft.rds"
+readRDS(url(link3))
 ```
 
 
