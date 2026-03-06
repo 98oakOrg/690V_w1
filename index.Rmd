@@ -56,12 +56,12 @@ readRDS(url(link3))
 
 ## Row {data-height=500}
 
-### Column {data-width=6}
-#### Count of Cars per GEAR
+### THREE-GEAR CARS ARE DOMINANT {data-width=6}
+
 ```{r, fig.width=5, fig.height=3}
 gear_counts <- mtcars %>%
   count(gear) %>%
-  mutate(gear = factor(gear, levels = sort(unique(gear), decreasing = TRUE)))
+  mutate(gear = factor(gear, levels = sort(unique(gear), decreasing = FALSE)))
 
 ggplot(gear_counts, aes(x = gear, y = n)) +
   geom_col(fill = "grey80") +
@@ -70,15 +70,20 @@ ggplot(gear_counts, aes(x = gear, y = n)) +
   scale_y_continuous(expand = expansion(mult = c(0, 0.15))) +
   labs(
     title = "Count of Cars per GEAR",
-    subtitle = "THREE-GEAR CARS ARE DOMINANT",
-    x = NULL,
+    x = "Count",
     y = "Gear",
     caption = "Source: mtcars data"
   ) +
-  theme_minimal(base_size = 14)
+  theme_classic(base_size = 14) +
+  theme(
+    axis.line.x = element_blank(),
+    axis.ticks.x = element_blank(),
+    axis.text.x  = element_blank(),
+    axis.title.x = element_blank()
+  )
 ```
 
-### Column {data-width=6}
+### FEW CARS have SIX or more CARBURATORS {data-width=6}
 #### Count of Cars per CARB
 
 ```{r, fig.width=5, fig.height=3}
@@ -92,20 +97,25 @@ ggplot(carb_counts, aes(x = factor(carb), y = n)) +
   scale_y_continuous(expand = expansion(mult = c(0, 0.12))) +
   labs(
     title = "Count of Cars per CARB",
-    subtitle = "FEW CARS have SIX or more CARBURATORS",
     x = "CARB",
     y = NULL,
     caption = "Source: mtcars data"
   ) +
-  theme_minimal(base_size = 14) +
-  theme(plot.title = element_text(face = "bold"))
+  theme_classic(base_size = 14) +
+  theme(plot.title = element_text(face = "bold"))  +
+  theme(
+    axis.line.y = element_blank(),
+    axis.ticks.y = element_blank(),
+    axis.text.y  = element_blank(),
+    axis.title.y = element_blank()
+  )
 ```
 
 ***
 
 ## Row {data-height=720}
-### Column {data-width=12}
-#### Distribution of Cylinder Counts by Carburetors and Gears
+### Only 5-gear cars utilize the 6 and 8 carburetor setups. {data-width=12}
+
 
 ```{r, fig.width=12, fig.height=6}
 dist_df <- mtcars %>%
@@ -120,7 +130,6 @@ ggplot(dist_df, aes(x = factor(cyl), y = n)) +
   geom_text(aes(label = pct_label), vjust = -0.4, size = 3) +
   facet_grid(
     gear ~ carb,
-    switch = "y",
     labeller = labeller(
       carb = function(x) paste0("carb: ", x),
       gear = function(x) paste0("gear: ", x)
