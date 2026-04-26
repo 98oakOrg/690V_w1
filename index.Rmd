@@ -201,7 +201,7 @@ ggplot(type_table, aes(x = reorder(School_Type, -Percent), y = Percent)) +
 ### Numerical Variable: Students
 
 ```{r}
-  #plot 2 numerical
+#plot 2 numerical
 mean_students <- mean(mass_data$Students, na.rm = TRUE)
 
 ggplot(mass_data, aes(x = Students)) +
@@ -229,6 +229,58 @@ ggplot(mass_data, aes(x = Students)) +
       margin = margin(t = 8)
     )
   )
+```
+
+
+# HW4: Multivariate {data-orientation=rows}
+## Row
+
+### UCR Code by Sex
+
+```{r}
+library(readxl)
+arrests <- read_excel("Mass_Arrests.xlsx", sheet = 1)
+#invisible(names(arrests))
+#invisible(glimpse(arrests))
+
+
+#determine distribution of data
+library(dplyr)
+charge_distribution <- arrests %>%
+  count(`Arrest Offense by UCR Code`, sort = TRUE) %>%
+  mutate(pct = n / sum(n),
+    cum_pct = cumsum(pct))
+#charge_distribution
+
+#determine what I'll report on
+top_charges <- charge_distribution %>%
+  filter(cum_pct <= 0.80) %>% 
+  pull(`Arrest Offense by UCR Code`)
+
+arrests_categorize <- arrests %>%
+  mutate(Charge_grouped = ifelse(
+      `Arrest Offense by UCR Code` %in% top_charges,
+      `Arrest Offense by UCR Code`,
+      "Other"),
+    Charge_label = case_when(
+      Charge_grouped == "90D" ~ "Drug Possession",
+      Charge_grouped == "90Z" ~ "Drug Violation",
+      Charge_grouped == "MV"  ~ "Motor Vehicle",
+      TRUE ~ "Other"))
+
+library(forcats)
+
+arrests_categorize$Charge_label <- fct_infreq(arrests_categorize$Charge_label)
+
+ggplot(arrests_categorize, aes(x = Sex, fill = Charge_label)) +
+  geom_bar(position = "fill") +
+  scale_y_continuous(labels = scales::percent) +
+  labs(
+    title = "Distribution of UCR Code by Sex",
+    x = "Sex",
+    y = "Proportion",
+    fill = "Offense Type") +
+  theme_minimal()
 ```
 
 
